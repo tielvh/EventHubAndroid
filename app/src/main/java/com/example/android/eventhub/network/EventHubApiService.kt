@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "https://eventhubweb4.azurewebsites.net/api"
+private const val BASE_URL = "https://eventhubweb4.azurewebsites.net/api/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
