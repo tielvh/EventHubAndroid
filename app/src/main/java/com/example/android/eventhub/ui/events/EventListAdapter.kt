@@ -46,17 +46,7 @@ class EventDiffCallback : DiffUtil.ItemCallback<Event>() {
     }
 }
 
-@BindingAdapter("eventName")
-fun TextView.setEventName(item: Event) {
-    text = item.name
-}
-
 @BindingAdapter("eventDateTime")
 fun TextView.setEventDateTime(item: Event) {
     text = item.dateTime.toString()
-}
-
-@BindingAdapter("eventPlace")
-fun TextView.setEventPlace(item: Event) {
-    text = item.place
 }
