@@ -12,40 +12,61 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/txt_event_name"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_event_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{event.name}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Test event" />
+
+            <TextView
+                android:id="@+id/text_event_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{event.place}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/txt_event_datetime"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Affligem" />
+
+            <TextView
+                android:id="@+id/txt_event_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:eventDateTime="@{event}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_event_place"
+                tools:text="30 Sep 20 12:00" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/img_event_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:eventName="@{event}"
+            android:layout_height="0dp"
+            android:contentDescription="@{event.name}"
+            app:imageUrl="@{event.imgPath}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Test event" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_event_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:eventPlace="@{event}"
-            app:layout_constraintEnd_toStartOf="@+id/txt_event_datetime"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_event_name"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            tools:text="Affligem" />
-
-        <TextView
-            android:id="@+id/txt_event_datetime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:eventDateTime="@{event}"
-            app:layout_constraintStart_toEndOf="@+id/text_event_place"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_event_name"
-            tools:text="30 Sep 20 12:00" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
