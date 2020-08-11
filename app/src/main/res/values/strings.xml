@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EventHub</string>
+    <string name="network_error">No internet connection!</string>
 </resources>

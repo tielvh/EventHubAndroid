@@ -42,4 +42,8 @@ class EventsViewModel(application: Application): ViewModel() {
         super.onCleared()
         viewModelJob.cancel()
     }
+
+    fun onRefresh() {
+        refreshDataFromNetwork()
+    }
 }
