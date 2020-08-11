@@ -1,5 +1,6 @@
 package com.example.android.eventhub.network
 
+import com.example.android.eventhub.domain.Event
 import com.squareup.moshi.JsonClass
 import java.time.LocalDateTime
 
@@ -12,3 +13,7 @@ data class NetworkEvent(
     val description: String,
     val imgPath: String
 )
+
+fun NetworkEvent.asEvent(): Event {
+    return Event(eventId, name, dateTime, place, description, imgPath)
+}
