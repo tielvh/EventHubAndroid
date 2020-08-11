@@ -17,3 +17,5 @@ data class NetworkEvent(
 fun NetworkEvent.asEvent(): Event {
     return Event(eventId, name, dateTime, place, description, imgPath)
 }
+
+fun List<NetworkEvent>.asEvents(): List<Event> = this.map { it.asEvent() }
