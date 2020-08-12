@@ -13,11 +13,11 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
     val event: LiveData<Event>
         get() = _event
 
-    val eventDateFormatted = Transformations.map(event) { event ->
+    val eventDateFormatted: LiveData<String> = Transformations.map(event) { event ->
         event.dateTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
     }
 
-    val eventTimeFormatted = Transformations.map(event) { event ->
+    val eventTimeFormatted: LiveData<String> = Transformations.map(event) { event ->
         event.dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
     }
 
