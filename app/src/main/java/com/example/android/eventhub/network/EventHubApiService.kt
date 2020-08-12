@@ -8,6 +8,7 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://eventhubweb4.azurewebsites.net/api/"
 
@@ -25,6 +26,9 @@ private val retrofit = Retrofit.Builder()
 interface EventHubApiService {
     @GET("Events")
     fun getAllEventsAsync(): Deferred<List<NetworkEvent>>
+
+    @GET("Comments")
+    fun getCommentsAsync(@Query("eventId") eventId: Int): Deferred<List<NetworkComment>>
 }
 
 object EventApi {
