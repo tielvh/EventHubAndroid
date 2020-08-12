@@ -10,7 +10,7 @@ import com.example.android.eventhub.database.daos.EventDao
 import com.example.android.eventhub.domain.Comment
 import com.example.android.eventhub.domain.Event
 
-@Database(entities = [Event::class, Comment::class], version = 1, exportSchema = false)
+@Database(entities = [Event::class, Comment::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class EventDatabase : RoomDatabase() {
     abstract val eventDao: EventDao
