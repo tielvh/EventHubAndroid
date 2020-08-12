@@ -12,6 +12,7 @@ class EventRepository(private val database: EventDatabase) {
     suspend fun refreshEvents() {
         withContext(Dispatchers.IO) {
             val events = EventApi.retrofitService.getAllEventsAsync().await()
+            database.eventDao.clear()
             database.eventDao.insert(events.asEvents())
         }
     }
