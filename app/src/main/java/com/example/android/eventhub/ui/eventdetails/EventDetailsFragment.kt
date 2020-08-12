@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.example.android.eventhub.R
 import com.example.android.eventhub.databinding.FragmentEventDetailsBinding
 
 class EventDetailsFragment : Fragment() {
+    private lateinit var viewModel: EventDetailsViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -20,6 +23,14 @@ class EventDetailsFragment : Fragment() {
             container,
             false
         )
+
+        val application = requireNotNull(this.activity).application
+
+        val args = EventDetailsFragmentArgs.fromBundle(arguments!!)
+        val event = args.event
+
+        val viewModelFactory = EventDetailsViewModelFactory(application, event)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(EventDetailsViewModel::class.java)
 
         return binding.root
     }
