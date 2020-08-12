@@ -30,7 +30,10 @@ class EventDetailsFragment : Fragment() {
         val event = args.event
 
         val viewModelFactory = EventDetailsViewModelFactory(application, event)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(EventDetailsViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(EventDetailsViewModel::class.java)
+
+        binding.viewModel = viewModel
 
         return binding.root
     }
