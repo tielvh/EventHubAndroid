@@ -15,6 +15,6 @@ interface CommentDao {
     @Query("SELECT * FROM Comment WHERE eventId = :eventId ORDER BY timeStamp DESC")
     fun getMany(eventId: Int): LiveData<List<Comment>>
 
-    @Query("DELETE FROM Comment")
-    fun clear()
+    @Query("DELETE FROM Comment where eventId = :eventId")
+    fun clear(eventId: Int)
 }
