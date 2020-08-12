@@ -11,6 +11,7 @@ import com.example.android.eventhub.OnItemClickListener
 import com.example.android.eventhub.databinding.ListItemEventBinding
 import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.ui.events.EventListAdapter.ViewHolder.Companion.from
+import java.time.format.DateTimeFormatter
 
 class EventListAdapter(val listener: OnItemClickListener<Event>) : ListAdapter<Event, EventListAdapter.ViewHolder>(EventDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,5 +53,5 @@ class EventDiffCallback : DiffUtil.ItemCallback<Event>() {
 
 @BindingAdapter("eventDateTime")
 fun TextView.setEventDateTime(item: Event) {
-    text = item.dateTime.toString()
+    text = item.dateTime.format(DateTimeFormatter.ofPattern("dd MMM yy HH:mm"))
 }
