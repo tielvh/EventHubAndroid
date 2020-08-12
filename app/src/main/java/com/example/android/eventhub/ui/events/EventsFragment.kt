@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.android.eventhub.OnItemClickListener
 import com.example.android.eventhub.R
 import com.example.android.eventhub.databinding.FragmentEventsBinding
@@ -49,6 +50,14 @@ class EventsFragment : Fragment() {
         viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if (it) onNetworkError()
+            }
+        })
+
+        viewModel.navigateToDetails.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                this.findNavController()
+                    .navigate(EventsFragmentDirections.actionEventsFragmentToEventDetailsFragment(it))
+                viewModel.doneNavigating()
             }
         })
 

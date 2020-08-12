@@ -9,5 +9,18 @@
         android:id="@+id/eventsFragment"
         android:name="com.example.android.eventhub.ui.events.EventsFragment"
         android:label="EventsFragment"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/action_eventsFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.example.android.eventhub.ui.eventdetails.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details" >
+        <argument
+            android:name="event"
+            app:argType="com.example.android.eventhub.domain.Event" />
+    </fragment>
 </navigation>

@@ -55,4 +55,8 @@ class EventsViewModel(application: Application) : ViewModel() {
     fun onNavigateToDetails(event: Event) {
         _navigateToDetails.value = event
     }
+
+    fun doneNavigating() {
+        _navigateToDetails.value = null
+    }
 }

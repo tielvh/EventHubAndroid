@@ -3,5 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.eventdetails.EventDetailsFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Test" />
 
 </layout>
