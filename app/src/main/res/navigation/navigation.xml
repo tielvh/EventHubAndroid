@@ -23,4 +23,9 @@
             android:name="event"
             app:argType="com.example.android.eventhub.domain.Event" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.android.eventhub.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
