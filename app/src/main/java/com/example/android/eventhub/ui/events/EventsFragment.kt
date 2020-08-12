@@ -9,8 +9,10 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.android.eventhub.OnItemClickListener
 import com.example.android.eventhub.R
 import com.example.android.eventhub.databinding.FragmentEventsBinding
+import com.example.android.eventhub.domain.Event
 
 class EventsFragment : Fragment() {
     private lateinit var viewModel: EventsViewModel
@@ -31,7 +33,12 @@ class EventsFragment : Fragment() {
         val viewModelFactory = EventsViewModelFactory(application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(EventsViewModel::class.java)
 
-        val adapter = EventListAdapter()
+        val listener = object : OnItemClickListener<Event> {
+            override fun onItemClick(item: Event) {
+                viewModel.onNavigateToDetails(item)
+            }
+        }
+        val adapter = EventListAdapter(listener)
         binding.listEvents.adapter = adapter
         viewModel.events.observe(viewLifecycleOwner, Observer {
             it?.let {

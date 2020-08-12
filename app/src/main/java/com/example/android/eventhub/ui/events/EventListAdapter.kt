@@ -7,23 +7,27 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.eventhub.OnItemClickListener
 import com.example.android.eventhub.databinding.ListItemEventBinding
 import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.ui.events.EventListAdapter.ViewHolder.Companion.from
 
-class EventListAdapter : ListAdapter<Event, EventListAdapter.ViewHolder>(EventDiffCallback()) {
+class EventListAdapter(val listener: OnItemClickListener<Event>) : ListAdapter<Event, EventListAdapter.ViewHolder>(EventDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event = getItem(position)
-        holder.bind(event)
+        holder.bind(event, listener)
     }
 
     class ViewHolder private constructor(val binding: ListItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Event) {
+        fun bind(item: Event, listener: OnItemClickListener<Event>) {
             binding.event = item
+            itemView.setOnClickListener {
+                listener.onItemClick(item)
+            }
         }
 
         companion object {

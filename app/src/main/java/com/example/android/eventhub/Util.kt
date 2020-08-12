@@ -11,6 +11,10 @@ import com.squareup.moshi.ToJson
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+interface OnItemClickListener<T> {
+    fun onItemClick(item: T)
+}
+
 fun getDatabase(application: Application): EventDatabase {
     return EventDatabase.getInstance(application)
 }
