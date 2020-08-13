@@ -47,11 +47,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:contentDescription="@string/clock"
             android:src="@drawable/ic_baseline_access_time_24"
             app:layout_constraintBottom_toBottomOf="@+id/txt_event_details_name"
             app:layout_constraintEnd_toStartOf="@+id/txt_event_details_date"
-            app:layout_constraintTop_toTopOf="@id/txt_event_details_name"
-            android:contentDescription="@string/clock" />
+            app:layout_constraintTop_toTopOf="@id/txt_event_details_name" />
 
         <TextView
             android:id="@+id/txt_event_details_date"
@@ -88,6 +88,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_event_details_name"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
+
+        <Button
+            android:id="@+id/btn_toggle_comments"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/comments"
+            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_event_details_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
