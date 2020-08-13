@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.login.LoginFragment">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.android.eventhub.ui.login.LoginViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -33,6 +40,7 @@
             app:layout_constraintTop_toBottomOf="@+id/img_login_logo">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:text="@={viewModel.username}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -52,6 +60,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_login_username">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:text="@={viewModel.password}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -62,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:enabled="@{viewModel.isLoginButtonEnabled}"
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

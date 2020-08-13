@@ -6,6 +6,11 @@ import android.content.SharedPreferences
 import com.auth0.android.jwt.JWT
 import com.example.android.eventhub.R
 import com.example.android.eventhub.domain.User
+import com.example.android.eventhub.network.EventApi
+import com.example.android.eventhub.network.NetworkCredentials
+import com.example.android.eventhub.network.asUser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.lang.IllegalStateException
 
 class UserRepository(private val application: Application) {
@@ -64,9 +69,23 @@ class UserRepository(private val application: Application) {
         return preferences.edit()
     }
 
-    fun login(username: String, password: String): Boolean {
-        // TODO: handle login
-        return false
+    suspend fun login(username: String, password: String) {
+        withContext(Dispatchers.IO) {
+            val user =
+                EventApi.retrofitService.authenticateAsync(NetworkCredentials(username, password))
+                    .await()
+            saveUser(user.asUser())
+        }
+    }
+
+    private fun saveUser(user: User) {
+        logout()
+        getEditor().putString(application.getString(R.string.saved_user_token_key), user.token)
+            .putString(application.getString(R.string.saved_user_first_name_key), user.firstName)
+            .putString(application.getString(R.string.saved_user_last_name_key), user.lastName)
+            .putString(application.getString(R.string.username), user.username)
+            .putInt(application.getString(R.string.saved_user_user_id_key), user.id)
+            .apply()
     }
 
     fun logout() {

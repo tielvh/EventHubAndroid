@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.example.android.eventhub.R
 import com.example.android.eventhub.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
+    private lateinit var viewModel: LoginViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -20,6 +23,13 @@ class LoginFragment : Fragment() {
             container,
             false
         )
+
+        val application = requireNotNull(this.activity).application
+
+        val viewModelFactory = LoginViewModelFactory(application)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+
+        binding.viewModel = viewModel
 
         return binding.root
     }
