@@ -2,6 +2,7 @@ package com.example.android.eventhub.network
 
 import com.example.android.eventhub.App
 import com.example.android.eventhub.LocalDateTimeAdapter
+import com.example.android.eventhub.domain.User
 import com.example.android.eventhub.repository.UserRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -12,7 +13,9 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://eventhubweb4.azurewebsites.net/api/"
@@ -35,6 +38,9 @@ interface EventHubApiService {
 
     @GET("Comments")
     fun getCommentsAsync(@Query("eventId") eventId: Int): Deferred<List<NetworkComment>>
+
+    @POST("Users/Authenticate")
+    fun authenticateAsync(@Body credentials: NetworkCredentials): Deferred<NetworkUser>
 }
 
 object EventApi {

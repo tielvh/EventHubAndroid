@@ -2,6 +2,7 @@ package com.example.android.eventhub.network
 
 import com.example.android.eventhub.domain.Comment
 import com.example.android.eventhub.domain.Event
+import com.example.android.eventhub.domain.User
 import com.squareup.moshi.JsonClass
 import java.time.LocalDateTime
 
@@ -34,3 +35,22 @@ fun NetworkComment.asComment(eventId: Int): Comment {
 
 fun List<NetworkComment>.asComments(eventId: Int): List<Comment> =
     this.map { it.asComment(eventId) }
+
+@JsonClass(generateAdapter = true)
+data class NetworkCredentials(
+    val userName: String,
+    val password: String
+)
+
+@JsonClass(generateAdapter = true)
+data class NetworkUser(
+    val userId: Int,
+    val username: String,
+    val firstName: String,
+    val lastName: String,
+    val token: String
+)
+
+fun NetworkUser.asUser(): User {
+    return User(userId, username, firstName, lastName, token)
+}
