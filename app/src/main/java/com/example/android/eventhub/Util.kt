@@ -44,3 +44,18 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .into(imgView)
     }
 }
+
+class App : Application() {
+    companion object {
+        private lateinit var INSTANCE: App
+
+        fun getInstance(): App {
+            return INSTANCE
+        }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        INSTANCE = this
+    }
+}

@@ -1,10 +1,15 @@
 package com.example.android.eventhub.network
 
+import com.example.android.eventhub.App
 import com.example.android.eventhub.LocalDateTimeAdapter
+import com.example.android.eventhub.repository.UserRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -18,6 +23,7 @@ private val moshi = Moshi.Builder()
     .build()
 
 private val retrofit = Retrofit.Builder()
+    .client(OkHttpClient().newBuilder().addInterceptor(AuthenticationInterceptor()).build())
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .addCallAdapterFactory(CoroutineCallAdapterFactory())
     .baseUrl(BASE_URL)
@@ -34,5 +40,22 @@ interface EventHubApiService {
 object EventApi {
     val retrofitService: EventHubApiService by lazy {
         retrofit.create(EventHubApiService::class.java)
+    }
+}
+
+class AuthenticationInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val repository = UserRepository(App.getInstance())
+        var request = chain.request()
+        if (repository.isLoggedIn()) {
+            request = request
+                .newBuilder()
+                .addHeader(
+                    "Authorization",
+                    "Bearer ${repository.getUser().token}"
+                )
+                .build()
+        }
+        return chain.proceed(request)
     }
 }
