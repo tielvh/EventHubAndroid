@@ -13,4 +13,5 @@
     <string name="saved_user_last_name_key">user_last_name</string>
     <string name="saved_user_user_id_key">user_user_id</string>
     <string name="shared_preferences_name">eventhub_prefs</string>
+    <string name="place">place</string>
 </resources>
