@@ -72,12 +72,11 @@ class LoginViewModel(application: Application) : ViewModel() {
         viewModelScope.launch {
             userRepository.login(usr!!, pwd!!)
             if (userRepository.isLoggedIn()) {
-                // TODO: navigate
+                _navigateToAccount.postValue(true)
             } else {
                 _loginErrorVisible.postValue(true)
             }
             _loginButtonEnabled.postValue(true)
-            _navigateToAccount.postValue(true)
         }
     }
 
