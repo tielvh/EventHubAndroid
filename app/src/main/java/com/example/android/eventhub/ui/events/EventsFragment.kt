@@ -61,6 +61,7 @@ class EventsFragment : Fragment() {
             }
         })
 
+        binding.lifecycleOwner = this
         return binding.root
     }
 

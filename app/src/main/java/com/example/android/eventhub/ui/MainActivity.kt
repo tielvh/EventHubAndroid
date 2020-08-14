@@ -1,14 +1,13 @@
 package com.example.android.eventhub.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.eventhub.R
-import com.example.android.eventhub.repository.UserRepository
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,15 +22,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.title == getString(R.string.login)) {
-            val userRepository = UserRepository(application)
-            val navController = this.findNavController(R.id.navHostFragment)
-            if (userRepository.isLoggedIn()) {
-                // TODO: navigate to account fragment
-            } else {
-                navController.navigate(R.id.loginFragment)
-            }
-        }
-        return super.onOptionsItemSelected(item)
+        return NavigationUI.onNavDestinationSelected(
+            item,
+            findNavController(R.id.navHostFragment)
+        ) || super.onOptionsItemSelected(item)
     }
 }

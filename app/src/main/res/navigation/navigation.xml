@@ -32,4 +32,8 @@
         android:name="com.example.android.eventhub.ui.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.android.eventhub.ui.account.AccountFragment"
+        android:label="AccountFragment" />
 </navigation>

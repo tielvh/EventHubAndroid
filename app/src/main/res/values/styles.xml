@@ -5,11 +5,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorOnPrimary">@color/colorTitle</item>
     </style>
 
     <style name="Title" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:textColor">@color/colorLightTitle</item>
         <item name="android:textSize">35sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:shadowDx">3</item>
@@ -19,7 +18,7 @@
     </style>
 
     <style name="SubTitle" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:textColor">@color/colorLightSubTitle</item>
         <item name="android:textSize">20sp</item>
         <item name="fontWeight">500</item>
         <item name="android:shadowDx">1</item>
@@ -37,6 +36,16 @@
     <style name="DetailsSubTitle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/colorDetailsSubTitle</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AccountName" parent="Theme.MaterialComponents.Light">
+        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AccountUserName" parent="Theme.MaterialComponents.Light">
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>
