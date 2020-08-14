@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.android.eventhub.domain.Comment
 import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.getDatabase
 import com.example.android.eventhub.repository.CommentRepository
+import com.example.android.eventhub.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,7 +17,10 @@ import java.io.IOException
 import java.time.format.DateTimeFormatter
 
 class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
+    private val userRepository = UserRepository(application)
     private val commentRepository = CommentRepository(getDatabase(application))
+
+    val comments = commentRepository.getComments(e.id)
 
     private val viewModelJob = SupervisorJob()
 
@@ -35,12 +38,17 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
         event.dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
     }
 
-    private val _comments = MutableLiveData<List<Comment>>()
-    val comments: LiveData<List<Comment>>
-        get() = _comments
+    private val _commentsVisible = MutableLiveData<Boolean>()
+    val commentsVisible: LiveData<Boolean>
+        get() = _commentsVisible
+
+    private val _commentsOpen = MutableLiveData<Boolean>()
+    val commentsOpen: LiveData<Boolean>
+        get() = _commentsOpen
 
     init {
         _event.value = e
+        _commentsVisible.value = userRepository.isLoggedIn()
     }
 
     private fun refreshCommentsFromNetwork() = viewModelScope.launch {
@@ -58,7 +66,14 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
         viewModelJob.cancel()
     }
 
-    fun onRefreshComments() {
-        refreshCommentsFromNetwork()
+    fun onCommentsToggle() {
+        if (_commentsOpen.value != null && _commentsOpen.value!!) {
+            // Close comments
+            _commentsOpen.value = false
+        } else {
+            // Open comments
+            refreshCommentsFromNetwork()
+            _commentsOpen.value = true
+        }
     }
 }

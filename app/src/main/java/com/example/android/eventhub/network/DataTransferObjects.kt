@@ -25,12 +25,12 @@ fun List<NetworkEvent>.asEvents(): List<Event> = this.map { it.asEvent() }
 @JsonClass(generateAdapter = true)
 data class NetworkComment(
     val fullUserName: String,
-    val timeStamp: LocalDateTime,
+    val timestamp: LocalDateTime,
     val content: String
 )
 
 fun NetworkComment.asComment(eventId: Int): Comment {
-    return Comment(user = fullUserName, timeStamp = timeStamp, content = content, eventId = eventId)
+    return Comment(user = fullUserName, timeStamp = timestamp, content = content, eventId = eventId)
 }
 
 fun List<NetworkComment>.asComments(eventId: Int): List<Comment> =
