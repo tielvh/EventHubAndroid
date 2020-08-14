@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="10dp"
+                android:onClick="@{() -> viewModel.onLogout()}"
                 android:text="@string/logout" />
 
         </LinearLayout>
