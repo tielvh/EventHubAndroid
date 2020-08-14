@@ -4,7 +4,7 @@
     <string name="eventhub_logo">EventHub logo</string>
     <string name="username">Username</string>
     <string name="login">Login</string>
-    <string name="password">password</string>
+    <string name="password">Password</string>
     <string name="clock">Date &amp; Time</string>
     <string name="comments">Comments</string>
     <string name="saved_user_token_key">user_token</string>

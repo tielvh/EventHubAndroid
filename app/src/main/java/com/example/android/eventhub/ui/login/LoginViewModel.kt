@@ -17,29 +17,65 @@ class LoginViewModel(application: Application) : ViewModel() {
 
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private val _errorVisible = MutableLiveData<Boolean>()
-    val errorVisible: LiveData<Boolean>
-        get() = _errorVisible
+    private val _usernameErrorVisible = MutableLiveData<Boolean>()
+    val usernameErrorVisible: LiveData<Boolean>
+        get() = _usernameErrorVisible
+
+    private val _passwordErrorVisible = MutableLiveData<Boolean>()
+    val passwordErrorVisible: LiveData<Boolean>
+        get() = _passwordErrorVisible
+
+    private val _loginErrorVisible = MutableLiveData<Boolean>()
+    val loginErrorVisible: LiveData<Boolean>
+        get() = _loginErrorVisible
 
     val username = MutableLiveData<String>()
 
     val password = MutableLiveData<String>()
 
     fun onLogin() {
-        _errorVisible.value = false
+        hideErrors()
 
         val usr = username.value
         val pwd = password.value
 
-        if (usr != null && pwd != null) {
-            viewModelScope.launch {
-                userRepository.login(usr, pwd)
-                if (userRepository.isLoggedIn()) {
-                    // TODO: navigate
-                } else {
-                    _errorVisible.value = true
-                }
+        var hasErrors = false
+
+        if (!isUsernameValid(usr)) {
+            _usernameErrorVisible.value = true
+            hasErrors = true
+        }
+
+        if (!isPasswordValid(pwd)) {
+            _passwordErrorVisible.value = true
+            hasErrors = true
+        }
+
+        if (hasErrors) {
+            return
+        }
+
+        viewModelScope.launch {
+            userRepository.login(usr!!, pwd!!)
+            if (userRepository.isLoggedIn()) {
+                // TODO: navigate
+            } else {
+                _loginErrorVisible.value = true
             }
         }
+    }
+
+    private fun isUsernameValid(username: String?): Boolean {
+        return !username.isNullOrBlank()
+    }
+
+    private fun isPasswordValid(password: String?): Boolean {
+        return !password.isNullOrBlank()
+    }
+
+    private fun hideErrors() {
+        _loginErrorVisible.value = false
+        _usernameErrorVisible.value = false
+        _passwordErrorVisible.value = false
     }
 }

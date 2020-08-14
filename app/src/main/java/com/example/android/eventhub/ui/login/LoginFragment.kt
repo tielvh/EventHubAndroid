@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.android.eventhub.R
 import com.example.android.eventhub.databinding.FragmentLoginBinding
-import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
     private lateinit var viewModel: LoginViewModel
@@ -30,6 +29,7 @@ class LoginFragment : Fragment() {
         val viewModelFactory = LoginViewModelFactory(application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
 
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         return binding.root

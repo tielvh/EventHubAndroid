@@ -72,6 +72,7 @@ class UserRepository(private val application: Application) {
     }
 
     suspend fun login(username: String, password: String) {
+        logout()
         withContext(Dispatchers.IO) {
             try {
                 val user =
