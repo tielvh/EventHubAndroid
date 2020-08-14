@@ -21,4 +21,12 @@
     <string name="logout">logout</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="create">Create</string>
+    <string name="name_error">Name is empty</string>
+    <string name="place_error">Place is empty</string>
+    <string name="description_error">Description is empty</string>
+    <string name="date_error">Date must be after today</string>
+    <string name="time_error">Time is empty</string>
 </resources>
