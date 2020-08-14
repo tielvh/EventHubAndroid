@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.android.eventhub.R
 import com.example.android.eventhub.databinding.FragmentLoginBinding
 
@@ -28,6 +30,13 @@ class LoginFragment : Fragment() {
 
         val viewModelFactory = LoginViewModelFactory(application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+
+        viewModel.navigateToAccount.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToAccountFragment())
+                viewModel.doneNavigating()
+            }
+        })
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

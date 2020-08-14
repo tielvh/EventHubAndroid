@@ -33,6 +33,10 @@ class LoginViewModel(application: Application) : ViewModel() {
     val loginButtonEnabled: LiveData<Boolean>
         get() = _loginButtonEnabled
 
+    private val _navigateToAccount = MutableLiveData<Boolean>()
+    val navigateToAccount: LiveData<Boolean>
+        get() = _navigateToAccount
+
     val username = MutableLiveData<String>()
 
     val password = MutableLiveData<String>()
@@ -70,9 +74,10 @@ class LoginViewModel(application: Application) : ViewModel() {
             if (userRepository.isLoggedIn()) {
                 // TODO: navigate
             } else {
-                _loginErrorVisible.value = true
+                _loginErrorVisible.postValue(true)
             }
             _loginButtonEnabled.postValue(true)
+            _navigateToAccount.postValue(true)
         }
     }
 
@@ -93,5 +98,9 @@ class LoginViewModel(application: Application) : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun doneNavigating() {
+        _navigateToAccount.value = false
     }
 }
