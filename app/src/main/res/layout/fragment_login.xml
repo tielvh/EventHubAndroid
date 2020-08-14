@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.android.eventhub.ui.login.LoginViewModel" />
@@ -40,9 +42,9 @@
             app:layout_constraintTop_toBottomOf="@+id/img_login_logo">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:text="@={viewModel.username}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.username}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,10 +62,11 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_login_username">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:text="@={viewModel.password}"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={viewModel.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -71,11 +74,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:enabled="@{viewModel.isLoginButtonEnabled}"
+            android:onClick="@{() -> viewModel.onLogin()}"
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_login_password" />
+
+        <TextView
+            android:id="@+id/txt_login_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/login_error"
+            android:textColor="@color/colorError"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

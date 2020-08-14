@@ -14,4 +14,7 @@
     <string name="saved_user_user_id_key">user_user_id</string>
     <string name="shared_preferences_name">eventhub_prefs</string>
     <string name="place">place</string>
+    <string name="username_error">Username is empty</string>
+    <string name="password_error">Password is empty</string>
+    <string name="login_error">Incorrect username or password</string>
 </resources>

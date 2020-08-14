@@ -1,34 +1,45 @@
 package com.example.android.eventhub.ui.login
 
 import android.app.Application
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.eventhub.repository.UserRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : ViewModel() {
     private val userRepository = UserRepository(application)
 
-    private val isAuthenticating = MutableLiveData<Boolean>()
+    private val viewModelJob = SupervisorJob()
 
-    private val isValid = MutableLiveData<Boolean>()
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    val isLoginButtonEnabled = MediatorLiveData<Boolean>()
+    private val _errorVisible = MutableLiveData<Boolean>()
+    val errorVisible: LiveData<Boolean>
+        get() = _errorVisible
 
     val username = MutableLiveData<String>()
 
     val password = MutableLiveData<String>()
 
-    init {
-        isLoginButtonEnabled.addSource(isAuthenticating) {
-            it || !isValid.value!!
-        }
+    fun onLogin() {
+        _errorVisible.value = false
 
-        isLoginButtonEnabled.addSource(isValid) {
-            !it || isAuthenticating.value!!
-        }
+        val usr = username.value
+        val pwd = password.value
 
-        isValid.value = false
-        isAuthenticating.value = false
+        if (usr != null && pwd != null) {
+            viewModelScope.launch {
+                userRepository.login(usr, pwd)
+                if (userRepository.isLoggedIn()) {
+                    // TODO: navigate
+                } else {
+                    _errorVisible.value = true
+                }
+            }
+        }
     }
 }

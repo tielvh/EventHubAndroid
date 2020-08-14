@@ -11,7 +11,9 @@ import com.example.android.eventhub.network.NetworkCredentials
 import com.example.android.eventhub.network.asUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import java.lang.IllegalStateException
+import java.util.*
 
 class UserRepository(private val application: Application) {
     private var preferences: SharedPreferences = application.getSharedPreferences(
@@ -62,7 +64,7 @@ class UserRepository(private val application: Application) {
 
     private fun isTokenValid(token: String): Boolean {
         val jwt = JWT(token)
-        return jwt.isExpired(10)
+        return jwt.expiresAt != null && jwt.expiresAt!! > Calendar.getInstance().time
     }
 
     private fun getEditor(): SharedPreferences.Editor {
@@ -71,10 +73,19 @@ class UserRepository(private val application: Application) {
 
     suspend fun login(username: String, password: String) {
         withContext(Dispatchers.IO) {
-            val user =
-                EventApi.retrofitService.authenticateAsync(NetworkCredentials(username, password))
-                    .await()
-            saveUser(user.asUser())
+            try {
+                val user =
+                    EventApi.retrofitService.authenticateAsync(
+                        NetworkCredentials(
+                            username,
+                            password
+                        )
+                    )
+                        .await().asUser()
+                saveUser(user)
+            } catch (error: HttpException) {
+                // Do nothing
+            }
         }
     }
 
@@ -83,7 +94,7 @@ class UserRepository(private val application: Application) {
         getEditor().putString(application.getString(R.string.saved_user_token_key), user.token)
             .putString(application.getString(R.string.saved_user_first_name_key), user.firstName)
             .putString(application.getString(R.string.saved_user_last_name_key), user.lastName)
-            .putString(application.getString(R.string.username), user.username)
+            .putString(application.getString(R.string.saved_user_username_key), user.username)
             .putInt(application.getString(R.string.saved_user_user_id_key), user.id)
             .apply()
     }
