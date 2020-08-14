@@ -29,12 +29,21 @@ class LoginViewModel(application: Application) : ViewModel() {
     val loginErrorVisible: LiveData<Boolean>
         get() = _loginErrorVisible
 
+    private val _loginButtonEnabled = MutableLiveData<Boolean>()
+    val loginButtonEnabled: LiveData<Boolean>
+        get() = _loginButtonEnabled
+
     val username = MutableLiveData<String>()
 
     val password = MutableLiveData<String>()
 
+    init {
+        _loginButtonEnabled.value = true
+    }
+
     fun onLogin() {
         hideErrors()
+        _loginButtonEnabled.value = false
 
         val usr = username.value
         val pwd = password.value
@@ -52,6 +61,7 @@ class LoginViewModel(application: Application) : ViewModel() {
         }
 
         if (hasErrors) {
+            _loginButtonEnabled.value = true
             return
         }
 
@@ -62,6 +72,7 @@ class LoginViewModel(application: Application) : ViewModel() {
             } else {
                 _loginErrorVisible.value = true
             }
+            _loginButtonEnabled.postValue(true)
         }
     }
 
@@ -77,5 +88,10 @@ class LoginViewModel(application: Application) : ViewModel() {
         _loginErrorVisible.value = false
         _usernameErrorVisible.value = false
         _passwordErrorVisible.value = false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
