@@ -32,9 +32,11 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
 
         viewModel.navigateToAccount.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToAccountFragment())
-                viewModel.doneNavigating()
+            it?.let {
+                if (it) {
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToAccountFragment())
+                    viewModel.doneNavigating()
+                }
             }
         })
 

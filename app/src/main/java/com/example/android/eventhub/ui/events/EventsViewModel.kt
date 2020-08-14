@@ -30,6 +30,10 @@ class EventsViewModel(application: Application) : ViewModel() {
     val navigateToDetails: LiveData<Event>
         get() = _navigateToDetails
 
+    private val _navigateToEventCreation = MutableLiveData<Boolean>()
+    val navigateToEventCreation: LiveData<Boolean>
+        get() = _navigateToEventCreation
+
     init {
         refreshDataFromNetwork()
     }
@@ -58,5 +62,10 @@ class EventsViewModel(application: Application) : ViewModel() {
 
     fun doneNavigating() {
         _navigateToDetails.value = null
+        _navigateToEventCreation.value = null
+    }
+
+    fun onCreateEvent() {
+        _navigateToEventCreation.value = true
     }
 }

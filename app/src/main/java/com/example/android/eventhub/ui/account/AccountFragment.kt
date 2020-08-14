@@ -37,9 +37,11 @@ class AccountFragment : Fragment() {
         })
 
         viewModel.navigateBack.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                findNavController().popBackStack()
-                viewModel.doneNavigating()
+            it?.let {
+                if (it) {
+                    findNavController().popBackStack()
+                    viewModel.doneNavigating()
+                }
             }
         })
 

@@ -61,7 +61,17 @@ class EventsFragment : Fragment() {
             }
         })
 
+        viewModel.navigateToEventCreation.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) {
+                    findNavController().navigate(EventsFragmentDirections.actionEventsFragmentToEventCreationFragment())
+                    viewModel.doneNavigating()
+                }
+            }
+        })
+
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         return binding.root
     }
 
