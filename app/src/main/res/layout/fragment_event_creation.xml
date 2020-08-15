@@ -88,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.datePickerError}"
-                    android:visibility="@{viewModel.datePickerError.empty ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{viewModel.datePickerError == null || viewModel.datePickerError.empty ? View.GONE : View.VISIBLE}"
                     tools:text="Date must be after today" />
 
                 <Button
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:onClick="@{() -> viewModel.onShowImagePicker()}"
-                    android:text="@{viewModel.eventImageName, default=@string/image}" />
+                    android:text="@{viewModel.eventImageName ?? @string/image}" />
 
                 <ImageView
                     android:layout_width="320dp"
