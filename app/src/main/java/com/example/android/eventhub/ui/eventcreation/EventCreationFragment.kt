@@ -100,6 +100,7 @@ class EventCreationFragment : Fragment() {
                     "image/jpeg"
                 )
             )
+            .galleryOnly()
             .start { resultCode, data ->
                 if (resultCode == Activity.RESULT_OK) {
                     val file = ImagePicker.getFile(data)
