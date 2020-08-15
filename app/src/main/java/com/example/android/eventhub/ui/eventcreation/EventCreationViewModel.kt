@@ -106,6 +106,10 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
     val navigateBack: LiveData<Boolean>
         get() = _navigateBack
 
+    private val _networkError = MutableLiveData<Boolean>()
+    val networkError: LiveData<Boolean>
+        get() = _networkError
+
     init {
         eventDate.value = DATE_NOT_SET
         eventTime.value = TIME_NOT_SET
@@ -154,7 +158,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
             try {
                 eventRepository.addEvent(event)
             } catch (error: IOException) {
-                // TODO: show error message
+                _networkError.value = true
             }
 
             _navigateBack.value = true

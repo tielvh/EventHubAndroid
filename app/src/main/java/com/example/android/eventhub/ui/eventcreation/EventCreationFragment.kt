@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -66,6 +67,12 @@ class EventCreationFragment : Fragment() {
             }
         })
 
+        viewModel.networkError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) onNetworkError()
+            }
+        })
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding.root
@@ -117,5 +124,9 @@ class EventCreationFragment : Fragment() {
                     if (file != null) viewModel.setImage(file)
                 }
             }
+    }
+
+    private fun onNetworkError() {
+        Toast.makeText(activity, getString(R.string.network_error), Toast.LENGTH_LONG).show()
     }
 }
