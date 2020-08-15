@@ -151,7 +151,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
                 eventName.value!!,
                 LocalDateTime.of(eventDate.value!!, eventTime.value!!),
                 eventPlace.value!!,
-                eventDescription.value!!,
+                eventDescription.value!!.trim(),
                 eventImage.value!!
             )
 
