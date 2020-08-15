@@ -25,22 +25,28 @@ class EventRepository(private val database: EventDatabase) {
 
     suspend fun addEvent(event: NetworkPostEvent) {
         withContext(Dispatchers.IO) {
-            val req = MultipartBody.Builder()
-                .addFormDataPart("name", event.name)
-                .addFormDataPart("place", event.place)
-                .addFormDataPart("description", event.description)
-                .addFormDataPart(
-                    "dateTime", event.dateTime.format(
-                        DateTimeFormatter.ISO_LOCAL_DATE_TIME
-                    )
+            val namePart = MultipartBody.Part.createFormData("name", event.name)
+            val placePart = MultipartBody.Part.createFormData("place", event.place)
+            val dateTimePart = MultipartBody.Part.createFormData(
+                "dateTime",
+                event.dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            )
+            val descriptionPart =
+                MultipartBody.Part.createFormData("description", event.description)
+            val imagePart = MultipartBody.Part.createFormData(
+                "image", event.image.name, RequestBody.create(
+                    MediaType.parse("image/*"), event.image
                 )
-                .addFormDataPart(
-                    "image", event.image.name, RequestBody.create(
-                        MediaType.parse("image/*"), event.image
-                    )
-                ).build()
+            )
 
-            val retEvent = EventApi.retrofitService.postEventAsync(req).await()
+            val retEvent = EventApi.retrofitService.postEventAsync(
+                namePart,
+                placePart,
+                dateTimePart,
+                descriptionPart,
+                imagePart
+            ).await()
+
             database.eventDao.insert(retEvent.asEvent())
         }
     }

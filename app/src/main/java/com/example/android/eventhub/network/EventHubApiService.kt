@@ -38,7 +38,13 @@ interface EventHubApiService {
 
     @Multipart
     @POST("Events")
-    fun postEventAsync(@Part requestBody: MultipartBody): Deferred<NetworkEvent>
+    fun postEventAsync(
+        @Part name: MultipartBody.Part,
+        @Part place: MultipartBody.Part,
+        @Part dateTime: MultipartBody.Part,
+        @Part description: MultipartBody.Part,
+        @Part image: MultipartBody.Part
+    ): Deferred<NetworkEvent>
 }
 
 object EventApi {

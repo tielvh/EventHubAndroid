@@ -67,11 +67,11 @@ class EventCreationFragment : Fragment() {
         DatePickerDialog(
             requireContext(),
             DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                val date = LocalDate.of(year, month, day)
+                val date = LocalDate.of(year, month + 1, day)
                 viewModel.setDate(date)
             },
             now.year,
-            now.monthValue,
+            now.monthValue - 1,
             now.dayOfMonth
         ).show()
     }
