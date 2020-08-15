@@ -8,6 +8,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.*
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
@@ -48,7 +49,10 @@ interface EventHubApiService {
 
     @Multipart
     @POST("Comments")
-    fun postComment(@Part eventId: MultipartBody.Part, @Part content: MultipartBody.Part)
+    fun postCommentAsync(
+        @Part eventId: MultipartBody.Part,
+        @Part content: MultipartBody.Part
+    ): Call<Void>
 }
 
 object EventApi {

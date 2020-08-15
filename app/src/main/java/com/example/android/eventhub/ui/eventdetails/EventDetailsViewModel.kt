@@ -7,6 +7,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.getDatabase
+import com.example.android.eventhub.network.NetworkPostComment
 import com.example.android.eventhub.repository.CommentRepository
 import com.example.android.eventhub.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -48,6 +49,10 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
 
     val commentText = MutableLiveData<String>()
 
+    private val _networkError = MutableLiveData<Boolean>()
+    val networkError: LiveData<Boolean>
+        get() = _networkError
+
     val sendButtonEnabled: LiveData<Boolean> = Transformations.map(commentText) {
         !it.isNullOrBlank()
     }
@@ -84,5 +89,14 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
     }
 
     fun onSendComment() {
+        val text = commentText.value!!
+
+        viewModelScope.launch {
+            try {
+                commentRepository.addComment(NetworkPostComment(event.value!!.id, text))
+            } catch (error: IOException) {
+                _networkError.value = true
+            }
+        }
     }
 }

@@ -29,7 +29,7 @@ class CommentRepository(private val database: EventDatabase) {
                 MultipartBody.Part.createFormData("eventId", comment.eventId.toString())
             val contentPart = MultipartBody.Part.createFormData("content", comment.content)
 
-            EventApi.retrofitService.postComment(eventIdPart, contentPart)
+            EventApi.retrofitService.postCommentAsync(eventIdPart, contentPart).execute()
 
             refreshComments(comment.eventId)
         }

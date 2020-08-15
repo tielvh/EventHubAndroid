@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -27,7 +28,7 @@ class EventDetailsFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
 
-        val args = EventDetailsFragmentArgs.fromBundle(arguments!!)
+        val args = EventDetailsFragmentArgs.fromBundle(requireArguments())
         val event = args.event
 
         val viewModelFactory = EventDetailsViewModelFactory(application, event)
@@ -40,9 +41,19 @@ class EventDetailsFragment : Fragment() {
             it?.let { adapter.submitList(it) }
         })
 
+        viewModel.networkError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                onNetworkError()
+            }
+        })
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         return binding.root
+    }
+
+    private fun onNetworkError() {
+        Toast.makeText(activity, R.string.network_error, Toast.LENGTH_LONG).show()
     }
 }
