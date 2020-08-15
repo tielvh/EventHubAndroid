@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.android.eventhub.ui.events.EventsViewModel" />
@@ -37,6 +39,7 @@
             android:layout_margin="16dp"
             android:backgroundTint="@color/colorPrimary"
             android:onClick="@{() -> viewModel.onCreateEvent()}"
+            android:visibility="@{viewModel.addEventButtonVisible ? View.VISIBLE : View.GONE}"
             app:srcCompat="@drawable/ic_baseline_add_24" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

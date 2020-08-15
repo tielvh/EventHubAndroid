@@ -18,6 +18,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.File
+import java.io.IOException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -151,7 +152,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
 
             try {
                 eventRepository.addEvent(event)
-            } catch (error: HttpException) {
+            } catch (error: IOException) {
                 // TODO: show error message
             }
 
@@ -202,7 +203,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
             _imageError.postValue(application.getString(R.string.image_error))
         }
 
-        return hasError
+        return !hasError
     }
 
     private fun resetErrors() {

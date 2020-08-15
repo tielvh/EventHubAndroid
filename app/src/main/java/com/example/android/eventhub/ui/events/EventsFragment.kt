@@ -70,6 +70,7 @@ class EventsFragment : Fragment() {
             }
         })
 
+        lifecycle.addObserver(viewModel)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding.root

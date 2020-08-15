@@ -2,7 +2,6 @@ package com.example.android.eventhub.network
 
 import com.example.android.eventhub.App
 import com.example.android.eventhub.LocalDateTimeAdapter
-import com.example.android.eventhub.domain.User
 import com.example.android.eventhub.repository.UserRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -12,7 +11,6 @@ import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
-import java.sql.Timestamp
 
 private const val BASE_URL = "https://eventhubweb4.azurewebsites.net/api/"
 
@@ -40,7 +38,7 @@ interface EventHubApiService {
 
     @Multipart
     @POST("Events")
-    fun postEventAsync(@Body requestBody: RequestBody): Deferred<NetworkEvent>
+    fun postEventAsync(@Part requestBody: MultipartBody): Deferred<NetworkEvent>
 }
 
 object EventApi {
