@@ -54,7 +54,7 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
         get() = _networkError
 
     val sendButtonEnabled: LiveData<Boolean> = Transformations.map(commentText) {
-        !it.isNullOrBlank()
+        it != null && !it.trim().isBlank()
     }
 
     init {
@@ -89,11 +89,12 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
     }
 
     fun onSendComment() {
-        val text = commentText.value!!
+        val text = commentText.value!!.trim()
 
         viewModelScope.launch {
             try {
                 commentRepository.addComment(NetworkPostComment(event.value!!.id, text))
+                commentText.value = null
             } catch (error: IOException) {
                 _networkError.value = true
             }
