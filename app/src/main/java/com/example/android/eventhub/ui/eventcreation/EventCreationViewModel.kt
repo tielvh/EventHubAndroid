@@ -1,6 +1,8 @@
 package com.example.android.eventhub.ui.eventcreation
 
 import android.app.Application
+import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -8,11 +10,13 @@ import androidx.lifecycle.ViewModel
 import com.example.android.eventhub.R
 import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.getDatabase
+import com.example.android.eventhub.network.NetworkPostEvent
 import com.example.android.eventhub.repository.EventRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import java.io.File
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -40,6 +44,16 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
 
     private val eventTime = MutableLiveData<LocalTime>()
 
+    private val eventImage = MutableLiveData<File>()
+
+    val eventImageName: LiveData<String> = Transformations.map(eventImage) {
+        it.name
+    }
+
+    val eventImageUri: LiveData<Uri> = Transformations.map(eventImage) {
+        it.toUri()
+    }
+
     val dateButtonText: LiveData<String> = Transformations.map(eventDate) {
         if (it == DATE_NOT_SET) application.getString(R.string.date)
         else it.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
@@ -66,6 +80,10 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
     val showTimePicker: LiveData<Boolean>
         get() = _showTimePicker
 
+    private val _showImagePicker = MutableLiveData<Boolean>()
+    val showImagePicker
+        get() = _showImagePicker
+
     private val _nameError = MutableLiveData<String>()
     val nameError: LiveData<String>
         get() = _nameError
@@ -77,6 +95,10 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
     private val _descriptionError = MutableLiveData<String>()
     val descriptionError: LiveData<String>
         get() = _descriptionError
+
+    private val _imageError = MutableLiveData<String>()
+    val imageError: LiveData<String>
+        get() = _imageError
 
     private val _createButtonEnabled = MutableLiveData<Boolean>()
     val createButtonEnabled: LiveData<Boolean>
@@ -100,22 +122,32 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
         _showTimePicker.value = true
     }
 
+    fun onShowImagePicker() {
+        _showImagePicker.value = true
+    }
+
     fun setTime(t: LocalTime) {
         _showTimePicker.value = false
         eventTime.value = t
+    }
+
+    fun setImage(image: File) {
+        _showImagePicker.value = false
+        eventImage.value = image
     }
 
     fun onCreate() = viewModelScope.launch {
         _createButtonEnabled.postValue(false)
 
         if (validate()) {
-            val event = Event(
-                name = eventName.value!!,
-                place = eventPlace.value!!,
-                description = eventDescription.value!!,
-                dateTime = LocalDateTime.of(eventDate.value, eventTime.value),
-                imgPath = "" // TODO: implement image picker
+            val event = NetworkPostEvent(
+                eventName.value!!,
+                LocalDateTime.of(eventDate.value!!, eventTime.value!!),
+                eventPlace.value!!,
+                eventDescription.value!!,
+                eventImage.value!!
             )
+
             eventRepository.addEvent(event)
 
             // TODO: navigate to event list
@@ -159,6 +191,12 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
             _descriptionError.postValue(application.getString(R.string.description_error))
         }
 
+        val image = eventImage.value
+        if (!isEventImageValid(image)) {
+            hasError = true
+            _imageError.postValue(application.getString(R.string.image_error))
+        }
+
         return hasError
     }
 
@@ -168,6 +206,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
         _nameError.value = ""
         _placeError.value = ""
         _descriptionError.value = ""
+        _imageError.value = ""
     }
 
     private fun isEventNameValid(name: String?): Boolean {
@@ -188,5 +227,9 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
 
     private fun isEventTimeValid(time: LocalTime?): Boolean {
         return time != null && time != TIME_NOT_SET
+    }
+
+    private fun isEventImageValid(image: File?): Boolean {
+        return image != null && image.exists()
     }
 }

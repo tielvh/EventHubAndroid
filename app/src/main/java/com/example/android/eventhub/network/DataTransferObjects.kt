@@ -4,6 +4,7 @@ import com.example.android.eventhub.domain.Comment
 import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.domain.User
 import com.squareup.moshi.JsonClass
+import java.io.File
 import java.time.LocalDateTime
 
 @JsonClass(generateAdapter = true)
@@ -54,3 +55,11 @@ data class NetworkUser(
 fun NetworkUser.asUser(): User {
     return User(userId, username, firstName, lastName, token)
 }
+
+data class NetworkPostEvent(
+    val name: String,
+    val dateTime: LocalDateTime,
+    val place: String,
+    val description: String,
+    val image: File
+)

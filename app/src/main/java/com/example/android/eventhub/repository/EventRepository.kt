@@ -2,6 +2,7 @@ package com.example.android.eventhub.repository
 
 import com.example.android.eventhub.database.EventDatabase
 import com.example.android.eventhub.network.EventApi
+import com.example.android.eventhub.network.NetworkPostEvent
 import com.example.android.eventhub.network.asEvents
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +18,7 @@ class EventRepository(private val database: EventDatabase) {
         }
     }
 
-    suspend fun addEvent() {
+    suspend fun addEvent(event: NetworkPostEvent) {
         withContext(Dispatchers.IO) {
             // TODO: send API request
         }

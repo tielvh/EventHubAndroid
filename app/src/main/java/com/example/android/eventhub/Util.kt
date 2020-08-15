@@ -1,6 +1,7 @@
 package com.example.android.eventhub
 
 import android.app.Application
+import android.net.Uri
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -39,9 +40,14 @@ class LocalDateTimeAdapter {
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
-            .load(imgUri)
-            .into(imgView)
+        bindImage(imgView, imgUri)
+    }
+}
+
+@BindingAdapter("imageUrl")
+fun bindImage(imgView: ImageView, imgUri: Uri?) {
+    imgUri?.let {
+        Glide.with(imgView.context).load(imgUri).into(imgView)
     }
 }
 

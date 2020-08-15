@@ -1,5 +1,6 @@
 package com.example.android.eventhub.ui.eventcreation
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -12,9 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.android.eventhub.R
 import com.example.android.eventhub.databinding.FragmentEventCreationBinding
+import com.github.dhaval2404.imagepicker.ImagePicker
 import java.time.LocalDate
 import java.time.LocalTime
-import kotlin.math.min
 
 class EventCreationFragment : Fragment() {
     private lateinit var viewModel: EventCreationViewModel
@@ -46,6 +47,12 @@ class EventCreationFragment : Fragment() {
         viewModel.showTimePicker.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if (it) showTimePicker()
+            }
+        })
+
+        viewModel.showImagePicker.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) showImagePicker()
             }
         })
 
@@ -82,5 +89,22 @@ class EventCreationFragment : Fragment() {
             noon.minute,
             true
         ).show()
+    }
+
+    private fun showImagePicker() {
+        ImagePicker.with(this)
+            .galleryMimeTypes(
+                mimeTypes = arrayOf(
+                    "image/png",
+                    "image/jpg",
+                    "image/jpeg"
+                )
+            )
+            .start { resultCode, data ->
+                if (resultCode == Activity.RESULT_OK) {
+                    val file = ImagePicker.getFile(data)
+                    if (file != null) viewModel.setImage(file)
+                }
+            }
     }
 }

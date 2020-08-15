@@ -12,129 +12,163 @@
             type="com.example.android.eventhub.ui.eventcreation.EventCreationViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:padding="10dp"
-            tools:ignore="UselessParent">
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/name"
-                android:textColorHint="@color/colorPrimary"
-                app:boxBackgroundColor="@null">
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp"
+                tools:ignore="UselessParent">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.eventName}" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="@string/name"
+                    android:textColorHint="@color/colorPrimary"
+                    app:boxBackgroundColor="@null">
 
-            <TextView
-                style="@style/Error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.nameError}"
-                android:visibility="@{viewModel.nameError.empty ? View.GONE : View.VISIBLE}"
-                tools:text="Name is empty" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewModel.eventName}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/place"
-                android:textColorHint="@color/colorPrimary"
-                app:boxBackgroundColor="@null">
-
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
+                    style="@style/Error"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.eventPlace}" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="@{viewModel.nameError}"
+                    android:visibility="@{viewModel.nameError.empty ? View.GONE : View.VISIBLE}"
+                    tools:text="Name is empty" />
 
-            <TextView
-                style="@style/Error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.placeError}"
-                android:visibility="@{viewModel.placeError.empty ? View.GONE : View.VISIBLE}"
-                tools:text="Name is empty" />
-
-            <Button
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:onClick="@{() -> viewModel.onShowDatePicker()}"
-                android:text="@{viewModel.dateButtonText}" />
-
-            <TextView
-                style="@style/Error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.datePickerError}"
-                android:visibility="@{viewModel.datePickerError.empty ? View.GONE : View.VISIBLE}"
-                tools:text="Name is empty" />
-
-            <Button
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:onClick="@{() -> viewModel.onShowTimePicker()}"
-                android:text="@{viewModel.timeButtonText}" />
-
-            <TextView
-                style="@style/Error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.timePickerError}"
-                android:visibility="@{viewModel.timePickerError.empty ? View.GONE : View.VISIBLE}"
-                tools:text="Name is empty" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/description"
-                android:textColorHint="@color/colorPrimary"
-                app:boxBackgroundColor="@null">
-
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:height="130dp"
-                    android:inputType="textMultiLine"
-                    android:text="@={viewModel.eventDescription}" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/place"
+                    android:textColorHint="@color/colorPrimary"
+                    app:boxBackgroundColor="@null">
 
-            <TextView
-                style="@style/Error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.descriptionError}"
-                android:visibility="@{viewModel.descriptionError.empty ? View.GONE : View.VISIBLE}"
-                tools:text="Name is empty" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={viewModel.eventPlace}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:onClick="@{() -> viewModel.onCreate()}"
-                android:text="@string/create" />
+                <TextView
+                    style="@style/Error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.placeError}"
+                    android:visibility="@{viewModel.placeError.empty ? View.GONE : View.VISIBLE}"
+                    tools:text="Place is empty" />
 
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{() -> viewModel.onShowDatePicker()}"
+                    android:text="@{viewModel.dateButtonText}"
+                    tools:text="Date" />
+
+                <TextView
+                    style="@style/Error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.datePickerError}"
+                    android:visibility="@{viewModel.datePickerError.empty ? View.GONE : View.VISIBLE}"
+                    tools:text="Date must be after today" />
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{() -> viewModel.onShowTimePicker()}"
+                    android:text="@{viewModel.timeButtonText}"
+                    tools:text="Time" />
+
+                <TextView
+                    style="@style/Error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.timePickerError}"
+                    android:visibility="@{viewModel.timePickerError == null || viewModel.timePickerError.empty ? View.GONE : View.VISIBLE}"
+                    tools:text="Time is empty" />
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{() -> viewModel.onShowImagePicker()}"
+                    android:text="@{viewModel.eventImageName, default=@string/image}" />
+
+                <ImageView
+                    android:layout_width="320dp"
+                    android:layout_height="180dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@{viewModel.eventImageName}"
+                    android:scaleType="fitXY"
+                    android:visibility="@{viewModel.eventImageUri == null ? View.GONE : View.VISIBLE}"
+                    app:imageUrl="@{viewModel.eventImageUri}"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <TextView
+                    style="@style/Error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.imageError}"
+                    android:visibility="@{viewModel.imageError == null || viewModel.imageError.empty ? View.GONE : View.VISIBLE}"
+                    tools:text="Image is empty" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/description"
+                    android:textColorHint="@color/colorPrimary"
+                    app:boxBackgroundColor="@null">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:height="130dp"
+                        android:inputType="textMultiLine"
+                        android:text="@={viewModel.eventDescription}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/Error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.descriptionError}"
+                    android:visibility="@{viewModel.descriptionError.empty ? View.GONE : View.VISIBLE}"
+                    tools:text="Description is empty" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{() -> viewModel.onCreate()}"
+                    android:text="@string/create" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </ScrollView>
 
 </layout>

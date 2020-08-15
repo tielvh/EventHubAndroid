@@ -29,4 +29,6 @@
     <string name="description_error">Description is empty</string>
     <string name="date_error">Date must be after today</string>
     <string name="time_error">Time is empty</string>
+    <string name="image">Image</string>
+    <string name="image_error">Image is empty</string>
 </resources>
