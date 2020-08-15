@@ -63,3 +63,8 @@ data class NetworkPostEvent(
     val description: String,
     val image: File
 )
+
+data class NetworkPostComment(
+    val eventId: Int,
+    val content: String
+)
