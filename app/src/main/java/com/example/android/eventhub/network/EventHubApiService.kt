@@ -45,6 +45,10 @@ interface EventHubApiService {
         @Part description: MultipartBody.Part,
         @Part image: MultipartBody.Part
     ): Deferred<NetworkEvent>
+
+    @Multipart
+    @POST("Comments")
+    fun postComment(@Part eventId: MultipartBody.Part, @Part content: MultipartBody.Part)
 }
 
 object EventApi {
