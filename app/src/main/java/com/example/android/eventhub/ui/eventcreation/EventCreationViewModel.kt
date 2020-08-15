@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.android.eventhub.R
-import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.getDatabase
 import com.example.android.eventhub.network.NetworkPostEvent
 import com.example.android.eventhub.repository.EventRepository
@@ -16,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import java.io.File
 import java.io.IOException
 import java.time.LocalDate
@@ -46,7 +44,9 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
 
     private val eventTime = MutableLiveData<LocalTime>()
 
-    private val eventImage = MutableLiveData<File>()
+    private val _eventImage = MutableLiveData<File>()
+    val eventImage: LiveData<File>
+        get() = _eventImage
 
     val eventImageName: LiveData<String> = Transformations.map(eventImage) {
         it.name
@@ -109,6 +109,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
     init {
         eventDate.value = DATE_NOT_SET
         eventTime.value = TIME_NOT_SET
+        _createButtonEnabled.value = true
     }
 
     fun onShowDatePicker() {
@@ -135,7 +136,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
 
     fun setImage(image: File) {
         _showImagePicker.value = false
-        eventImage.value = image
+        _eventImage.value = image
     }
 
     fun onCreate() = viewModelScope.launch {

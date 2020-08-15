@@ -1,7 +1,6 @@
 package com.example.android.eventhub
 
 import android.app.Application
-import android.net.Uri
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -9,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.android.eventhub.database.EventDatabase
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
+import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -40,14 +40,16 @@ class LocalDateTimeAdapter {
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        bindImage(imgView, imgUri)
+        Glide.with(imgView.context)
+            .load(imgUri)
+            .into(imgView)
     }
 }
 
 @BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, imgUri: Uri?) {
-    imgUri?.let {
-        Glide.with(imgView.context).load(imgUri).into(imgView)
+fun bindImage(imgView: ImageView, file: File?) {
+    if (file != null && file.exists()) {
+        Glide.with(imgView.context).load(file).into(imgView)
     }
 }
 

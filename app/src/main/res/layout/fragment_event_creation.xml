@@ -124,8 +124,8 @@
                     android:layout_gravity="center"
                     android:contentDescription="@{viewModel.eventImageName}"
                     android:scaleType="fitXY"
-                    android:visibility="@{viewModel.eventImageUri == null ? View.GONE : View.VISIBLE}"
-                    app:imageUrl="@{viewModel.eventImageUri}"
+                    android:visibility="@{viewModel.eventImage == null ? View.GONE : View.VISIBLE}"
+                    app:imageUrl="@{viewModel.eventImage}"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <TextView
@@ -166,6 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:enabled="@{viewModel.createButtonEnabled}"
                     android:onClick="@{() -> viewModel.onCreate()}"
                     android:text="@string/create" />
 
