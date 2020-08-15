@@ -16,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.io.File
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -148,7 +149,11 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
                 eventImage.value!!
             )
 
-            eventRepository.addEvent(event)
+            try {
+                eventRepository.addEvent(event)
+            } catch (error: HttpException) {
+                // TODO: show error message
+            }
 
             // TODO: navigate to event list
         }

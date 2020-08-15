@@ -9,6 +9,9 @@ import com.example.android.eventhub.domain.Event
 
 @Dao
 interface EventDao {
+    @Insert()
+    fun insert(event: Event)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(events: List<Event>)
 
