@@ -46,6 +46,12 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
     val commentsOpen: LiveData<Boolean>
         get() = _commentsOpen
 
+    val commentText = MutableLiveData<String>()
+
+    val sendButtonEnabled: LiveData<Boolean> = Transformations.map(commentText) {
+        !it.isNullOrBlank()
+    }
+
     init {
         _event.value = e
         _commentsVisible.value = userRepository.isLoggedIn()
@@ -75,5 +81,8 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
             refreshCommentsFromNetwork()
             _commentsOpen.value = true
         }
+    }
+
+    fun onSendComment() {
     }
 }

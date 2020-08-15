@@ -31,4 +31,6 @@
     <string name="time_error">Time is empty</string>
     <string name="image">Image</string>
     <string name="image_error">Image is empty</string>
+    <string name="add_comment">Add a comment</string>
+    <string name="send">Send</string>
 </resources>

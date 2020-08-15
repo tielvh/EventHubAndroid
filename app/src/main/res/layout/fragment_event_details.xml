@@ -162,15 +162,43 @@
                     android:onClick="@{() -> viewModel.onCommentsToggle()}"
                     android:text="@string/comments" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list_comments"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:visibility="@{viewModel.commentsOpen ? View.VISIBLE : View.GONE}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/list_item_comment" />
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.commentsOpen ? View.VISIBLE : View.GONE}">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/add_comment">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:text="@={viewModel.commentText}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{viewModel.sendButtonEnabled}"
+                        android:onClick="@{() -> viewModel.onSendComment()}"
+                        android:text="@string/send" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_comments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/list_item_comment" />
+
+                </LinearLayout>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
