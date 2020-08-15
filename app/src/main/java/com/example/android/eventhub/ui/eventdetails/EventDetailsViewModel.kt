@@ -1,10 +1,7 @@
 package com.example.android.eventhub.ui.eventdetails
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.getDatabase
 import com.example.android.eventhub.network.NetworkPostComment
@@ -53,7 +50,11 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
     val networkError: LiveData<Boolean>
         get() = _networkError
 
-    val sendButtonEnabled: LiveData<Boolean> = Transformations.map(commentText) {
+    private val _sending = MutableLiveData<Boolean>()
+    val sending: LiveData<Boolean>
+        get() = _sending
+
+    val commentTextValid: LiveData<Boolean> = Transformations.map(commentText) {
         it != null && !it.trim().isBlank()
     }
 
@@ -89,15 +90,18 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
     }
 
     fun onSendComment() {
+        _sending.value = true
         val text = commentText.value!!.trim()
 
         viewModelScope.launch {
             try {
                 commentRepository.addComment(NetworkPostComment(event.value!!.id, text))
-                commentText.value = null
+                commentText.postValue(null)
             } catch (error: IOException) {
                 _networkError.value = true
             }
+
+            _sending.postValue(false)
         }
     }
 }
