@@ -19,7 +19,9 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_eventsFragment_to_eventCreationFragment"
-            app:destination="@id/eventCreationFragment" />
+            app:destination="@id/eventCreationFragment"
+            app:enterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/eventDetailsFragment"

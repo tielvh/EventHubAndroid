@@ -52,10 +52,6 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
         it.name
     }
 
-    val eventImageUri: LiveData<Uri> = Transformations.map(eventImage) {
-        it.toUri()
-    }
-
     val dateButtonText: LiveData<String> = Transformations.map(eventDate) {
         if (it == DATE_NOT_SET) application.getString(R.string.date)
         else it.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
@@ -105,6 +101,10 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
     private val _createButtonEnabled = MutableLiveData<Boolean>()
     val createButtonEnabled: LiveData<Boolean>
         get() = _createButtonEnabled
+
+    private val _navigateBack = MutableLiveData<Boolean>()
+    val navigateBack: LiveData<Boolean>
+        get() = _navigateBack
 
     init {
         eventDate.value = DATE_NOT_SET
@@ -157,7 +157,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
                 // TODO: show error message
             }
 
-            // TODO: navigate to event list
+            _navigateBack.value = true
         }
 
         _createButtonEnabled.postValue(true)
@@ -238,5 +238,9 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
 
     private fun isEventImageValid(image: File?): Boolean {
         return image != null && image.exists()
+    }
+
+    fun doneNavigating() {
+        _navigateBack.value = false
     }
 }

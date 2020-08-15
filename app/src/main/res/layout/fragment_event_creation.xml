@@ -38,7 +38,6 @@
                     app:boxBackgroundColor="@null">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/InputField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={viewModel.eventName}" />
@@ -62,7 +61,6 @@
                     app:boxBackgroundColor="@null">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/InputField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={viewModel.eventPlace}" />
@@ -146,7 +144,6 @@
                     app:boxBackgroundColor="@null">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/InputField"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:height="130dp"

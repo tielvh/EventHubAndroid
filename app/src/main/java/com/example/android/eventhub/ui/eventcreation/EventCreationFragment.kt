@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.android.eventhub.R
 import com.example.android.eventhub.databinding.FragmentEventCreationBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -53,6 +54,15 @@ class EventCreationFragment : Fragment() {
         viewModel.showImagePicker.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if (it) showImagePicker()
+            }
+        })
+
+        viewModel.navigateBack.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) {
+                    findNavController().popBackStack()
+                    viewModel.doneNavigating()
+                }
             }
         })
 
