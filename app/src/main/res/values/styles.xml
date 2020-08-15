@@ -8,6 +8,10 @@
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <item name="android:textColorPrimary">@color/colorOnSecondary</item>
     </style>
+    
+    <style name="InputField">
+        <item name="android:textColor">@color/colorTextInput</item>
+    </style>
 
     <style name="Title" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/colorLightTitle</item>

@@ -42,6 +42,7 @@
             app:layout_constraintTop_toBottomOf="@+id/img_login_logo">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/InputField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={viewModel.username}" />
@@ -74,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_username_error">
 
             <com.google.android.material.textfield.TextInputEditText
-
+                style="@style/InputField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"

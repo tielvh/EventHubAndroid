@@ -11,4 +11,5 @@
     <color name="colorDetailsSubTitle">#000000</color>
     <color name="colorError">#A50000</color>
     <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorTextInput">#000000</color>
 </resources>
