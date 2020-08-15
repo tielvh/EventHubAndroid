@@ -134,7 +134,6 @@
                 android:onClick="@{() -> viewModel.onCreate()}"
                 android:text="@string/create" />
 
-
         </LinearLayout>
     </LinearLayout>
 

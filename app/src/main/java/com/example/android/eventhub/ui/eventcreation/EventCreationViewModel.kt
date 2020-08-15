@@ -6,7 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.android.eventhub.R
+import com.example.android.eventhub.domain.Event
+import com.example.android.eventhub.getDatabase
+import com.example.android.eventhub.repository.EventRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -15,6 +23,12 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
         private val DATE_NOT_SET = LocalDate.MIN
         private val TIME_NOT_SET = LocalTime.MIN
     }
+
+    private val eventRepository = EventRepository(getDatabase(application))
+
+    private val viewModelJob = SupervisorJob()
+
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     val eventName = MutableLiveData<String>()
 
@@ -64,6 +78,10 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
     val descriptionError: LiveData<String>
         get() = _descriptionError
 
+    private val _createButtonEnabled = MutableLiveData<Boolean>()
+    val createButtonEnabled: LiveData<Boolean>
+        get() = _createButtonEnabled
+
     init {
         eventDate.value = DATE_NOT_SET
         eventTime.value = TIME_NOT_SET
@@ -87,10 +105,23 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
         eventTime.value = t
     }
 
-    fun onCreate() {
+    fun onCreate() = viewModelScope.launch {
+        _createButtonEnabled.postValue(false)
+
         if (validate()) {
-            
+            val event = Event(
+                name = eventName.value!!,
+                place = eventPlace.value!!,
+                description = eventDescription.value!!,
+                dateTime = LocalDateTime.of(eventDate.value, eventTime.value),
+                imgPath = "" // TODO: implement image picker
+            )
+            eventRepository.addEvent(event)
+
+            // TODO: navigate to event list
         }
+
+        _createButtonEnabled.postValue(true)
     }
 
     private fun validate(): Boolean {
@@ -100,31 +131,32 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
         val name = eventName.value
         if (!isEventNameValid(name)) {
             hasError = true
-            _nameError.value = application.getString(R.string.name_error)
+            _nameError.postValue(application.getString(R.string.name_error))
         }
 
         val place = eventPlace.value
         if (!isEventPlaceValid(place)) {
             hasError = true
-            _placeError.value = application.getString(R.string.place_error)
+            _placeError.postValue(application.getString(R.string.place_error))
         }
 
         val date = eventDate.value
         if (!isEventDateValid(date)) {
             hasError = true
-            _datePickerError.value = application.getString(R.string.date_error)
+            _datePickerError.postValue(application.getString(R.string.date_error))
         }
 
         val time = eventTime.value
         if (!isEventTimeValid(time)) {
             hasError = true
-            _timePickerError.value = application.getString(R.string.time_error)
+            _timePickerError.postValue(application.getString(R.string.time_error))
         }
 
         val description = eventDescription.value
+        description?.trim()
         if (!isEventDescriptionValid(description)) {
             hasError = true
-            _descriptionError.value = application.getString(R.string.description_error)
+            _descriptionError.postValue(application.getString(R.string.description_error))
         }
 
         return hasError

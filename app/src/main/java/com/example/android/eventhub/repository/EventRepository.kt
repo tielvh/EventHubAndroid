@@ -16,4 +16,10 @@ class EventRepository(private val database: EventDatabase) {
             database.eventDao.insert(events.asEvents())
         }
     }
+
+    suspend fun addEvent() {
+        withContext(Dispatchers.IO) {
+            // TODO: send API request
+        }
+    }
 }
