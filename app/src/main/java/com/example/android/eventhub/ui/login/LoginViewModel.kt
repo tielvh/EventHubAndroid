@@ -4,14 +4,17 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.android.eventhub.App
 import com.example.android.eventhub.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class LoginViewModel(application: Application) : ViewModel() {
-    private val userRepository = UserRepository(application)
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private val viewModelJob = SupervisorJob()
 
@@ -42,6 +45,7 @@ class LoginViewModel(application: Application) : ViewModel() {
     val password = MutableLiveData<String>()
 
     init {
+        (application as App).appComponent.inject(this)
         _loginButtonEnabled.value = true
     }
 

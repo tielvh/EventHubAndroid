@@ -1,14 +1,12 @@
 package com.example.android.eventhub.ui.eventcreation
 
 import android.app.Application
-import android.net.Uri
-import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.android.eventhub.App
 import com.example.android.eventhub.R
-import com.example.android.eventhub.getDatabase
 import com.example.android.eventhub.network.NetworkPostEvent
 import com.example.android.eventhub.repository.EventRepository
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +19,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
 class EventCreationViewModel(private val application: Application) : ViewModel() {
     companion object {
@@ -28,7 +27,8 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
         private val TIME_NOT_SET = LocalTime.MIN
     }
 
-    private val eventRepository = EventRepository(getDatabase(application))
+    @Inject
+    lateinit var eventRepository: EventRepository
 
     private val viewModelJob = SupervisorJob()
 
@@ -111,6 +111,7 @@ class EventCreationViewModel(private val application: Application) : ViewModel()
         get() = _networkError
 
     init {
+        (application as App).appComponent.inject(this)
         eventDate.value = DATE_NOT_SET
         eventTime.value = TIME_NOT_SET
         _createButtonEnabled.value = true

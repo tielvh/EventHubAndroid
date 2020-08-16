@@ -5,6 +5,9 @@ import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.example.android.eventhub.dagger.AppComponent
+import com.example.android.eventhub.dagger.AppModule
+import com.example.android.eventhub.dagger.DaggerAppComponent
 import com.example.android.eventhub.database.EventDatabase
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
@@ -54,6 +57,8 @@ fun bindImage(imgView: ImageView, file: File?) {
 }
 
 class App : Application() {
+    lateinit var appComponent: AppComponent
+
     companion object {
         private lateinit var INSTANCE: App
 
@@ -65,5 +70,9 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
+        appComponent = initDagger(this)
     }
+
+    private fun initDagger(app: App): AppComponent =
+        DaggerAppComponent.builder().appModule(AppModule(app)).build()
 }

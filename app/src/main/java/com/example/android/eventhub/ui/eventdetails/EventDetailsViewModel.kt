@@ -1,9 +1,13 @@
 package com.example.android.eventhub.ui.eventdetails
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import com.example.android.eventhub.App
+import com.example.android.eventhub.domain.Comment
 import com.example.android.eventhub.domain.Event
-import com.example.android.eventhub.getDatabase
 import com.example.android.eventhub.network.NetworkPostComment
 import com.example.android.eventhub.repository.CommentRepository
 import com.example.android.eventhub.repository.UserRepository
@@ -13,12 +17,16 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
 class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
-    private val userRepository = UserRepository(application)
-    private val commentRepository = CommentRepository(getDatabase(application))
+    @Inject
+    lateinit var userRepository: UserRepository
 
-    val comments = commentRepository.getComments(e.id)
+    @Inject
+    lateinit var commentRepository: CommentRepository
+
+    val comments: LiveData<List<Comment>>
 
     private val viewModelJob = SupervisorJob()
 
@@ -59,6 +67,8 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
     }
 
     init {
+        (application as App).appComponent.inject(this)
+        comments = commentRepository.getComments(e.id)
         _event.value = e
         _commentsVisible.value = userRepository.isLoggedIn()
     }

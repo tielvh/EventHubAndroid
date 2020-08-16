@@ -2,8 +2,8 @@ package com.example.android.eventhub.ui.events
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.android.eventhub.App
 import com.example.android.eventhub.domain.Event
-import com.example.android.eventhub.getDatabase
 import com.example.android.eventhub.repository.EventRepository
 import com.example.android.eventhub.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -11,13 +11,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
 class EventsViewModel(application: Application) : ViewModel(), LifecycleObserver {
-    private val eventRepository = EventRepository(getDatabase(application))
+    @Inject
+    lateinit var eventRepository: EventRepository
 
-    private val userRepository = UserRepository(application)
+    @Inject
+    lateinit var userRepository: UserRepository
 
-    val events = eventRepository.events
+    var events: LiveData<List<Event>>
 
     private val viewModelJob = SupervisorJob()
 
@@ -40,6 +43,8 @@ class EventsViewModel(application: Application) : ViewModel(), LifecycleObserver
         get() = _addEventButtonVisible
 
     init {
+        (application as App).appComponent.inject(this)
+        events = eventRepository.events
         refreshDataFromNetwork()
         _addEventButtonVisible.value = userRepository.isLoggedIn()
     }
