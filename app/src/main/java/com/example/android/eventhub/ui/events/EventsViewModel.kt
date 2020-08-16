@@ -58,6 +58,11 @@ class EventsViewModel(application: Application) : ViewModel(), LifecycleObserver
         _addEventButtonVisible.value = userRepository.isLoggedIn()
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    private fun onLifeCyclePause() {
+        viewModelJob.cancel()
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
