@@ -6,10 +6,7 @@
     <color name="colorLightTitle">#FFFFFF</color>
     <color name="colorTitle">#000000</color>
     <color name="colorLightSubTitle">#FFFFFF</color>
-    <color name="colorSubTitle">#000000</color>
-    <color name="colorDetailsTitle">#001C80</color>
     <color name="colorDetailsSubTitle">#000000</color>
     <color name="colorError">#A50000</color>
     <color name="colorOnSecondary">#FFFFFF</color>
-    <color name="colorTextInput">#000000</color>
 </resources>

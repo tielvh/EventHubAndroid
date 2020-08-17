@@ -30,8 +30,8 @@ class EventsViewModel(application: Application) : ViewModel(), LifecycleObserver
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
 
-    private val _navigateToDetails = MutableLiveData<Event>()
-    val navigateToDetails: LiveData<Event>
+    private val _navigateToDetails = MutableLiveData<Event?>()
+    val navigateToDetails: LiveData<Event?>
         get() = _navigateToDetails
 
     private val _navigateToEventCreation = MutableLiveData<Boolean>()
@@ -83,7 +83,7 @@ class EventsViewModel(application: Application) : ViewModel(), LifecycleObserver
 
     fun doneNavigating() {
         _navigateToDetails.value = null
-        _navigateToEventCreation.value = null
+        _navigateToEventCreation.value = false
     }
 
     fun onCreateEvent() {
