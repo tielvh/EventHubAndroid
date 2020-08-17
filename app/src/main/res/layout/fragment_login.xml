@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txt_login_username"
+            android:id="@+id/login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -42,6 +42,7 @@
             app:layout_constraintTop_toBottomOf="@+id/img_login_logo">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_login_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -49,19 +50,19 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/txt_username_error"
+            android:id="@+id/txt_login_username_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/username_error"
             android:textColor="@color/colorError"
             android:visibility="@{viewModel.usernameErrorVisible ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintEnd_toEndOf="@id/txt_login_username"
+            app:layout_constraintEnd_toEndOf="@id/login_username"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/txt_login_username"
-            app:layout_constraintTop_toBottomOf="@id/txt_login_username" />
+            app:layout_constraintStart_toStartOf="@id/login_username"
+            app:layout_constraintTop_toBottomOf="@id/login_username" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txt_login_password"
+            android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -72,9 +73,10 @@
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_username_error">
+            app:layout_constraintTop_toBottomOf="@+id/txt_login_username_error">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -82,16 +84,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/txt_password_error"
+            android:id="@+id/txt_login_password_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/password_error"
             android:textColor="@color/colorError"
             android:visibility="@{viewModel.passwordErrorVisible ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintEnd_toEndOf="@id/txt_login_password"
+            app:layout_constraintEnd_toEndOf="@id/login_password"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/txt_login_password"
-            app:layout_constraintTop_toBottomOf="@id/txt_login_password" />
+            app:layout_constraintStart_toStartOf="@id/login_password"
+            app:layout_constraintTop_toBottomOf="@id/login_password" />
 
         <Button
             android:id="@+id/btn_login"
@@ -103,7 +105,7 @@
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_password_error" />
+            app:layout_constraintTop_toBottomOf="@id/txt_login_password_error" />
 
         <TextView
             android:id="@+id/txt_login_error"
