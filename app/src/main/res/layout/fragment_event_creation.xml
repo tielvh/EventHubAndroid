@@ -38,6 +38,7 @@
                     app:boxBackgroundColor="@null">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txt_event_creation_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
@@ -45,6 +46,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    android:id="@+id/txt_event_creation_name_error"
                     style="@style/Error"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,6 +164,7 @@
                     tools:text="Description is empty" />
 
                 <Button
+                    android:id="@+id/btn_event_creation_create"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
