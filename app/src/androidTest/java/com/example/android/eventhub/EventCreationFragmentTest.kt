@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class EventCreationFragmentTest {
      @Before
-     fun init() {
+     fun setUp() {
          launchFragmentInContainer<EventCreationFragment>(themeResId = R.style.AppTheme)
      }
 
