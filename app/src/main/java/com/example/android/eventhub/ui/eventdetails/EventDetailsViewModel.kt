@@ -106,7 +106,7 @@ class EventDetailsViewModel(application: Application, e: Event) : ViewModel() {
         viewModelScope.launch {
             try {
                 commentRepository.addComment(NetworkPostComment(event.value!!.id, text))
-                commentText.postValue(null)
+                commentText.postValue("")
             } catch (error: IOException) {
                 _networkError.value = true
             }
