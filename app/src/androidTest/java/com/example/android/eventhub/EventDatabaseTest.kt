@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
-import java.lang.Exception
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
@@ -36,10 +35,10 @@ class EventDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetEvent() {
+    fun testInsertAndGetEvent() {
         val event =
             Event(1, "Test", LocalDateTime.of(2020, 8, 11, 12, 0, 0), "here", "test", "test")
-        eventDao.insert(listOf(event))
+        eventDao.insert(event)
         val thisEvent = eventDao.getOne(1)
         assertEquals(event.name, thisEvent?.name)
     }
