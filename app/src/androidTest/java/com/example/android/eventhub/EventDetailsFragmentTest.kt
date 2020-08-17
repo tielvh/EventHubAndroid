@@ -13,6 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.eventhub.domain.Event
 import com.example.android.eventhub.ui.eventdetails.EventDetailsFragment
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -44,6 +45,11 @@ class EventDetailsFragmentTest {
         args = Bundle().apply {
             putSerializable("event", event)
         }
+    }
+
+    @After
+    fun clear() {
+        editor.clear().apply()
     }
 
     private fun startWithUserLoggedIn() {
